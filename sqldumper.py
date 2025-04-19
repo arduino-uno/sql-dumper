@@ -61,8 +61,7 @@ def version_search(url, n_cols, text_cols):
         "MS Access"          
     }
 
-    for version in versions:
-        print(version)
+    for version in versions:        
         if version in res:
             print ("[+] Found database version:")
             soup = BeautifulSoup(res, 'html.parser')
