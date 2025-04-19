@@ -7,9 +7,6 @@ import requests
 import sys
 import re
 from bs4 import BeautifulSoup
-import urllib3
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 proxies = {
   "http": "http://157.10.3.10:8080",
