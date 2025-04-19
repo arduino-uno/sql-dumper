@@ -57,8 +57,10 @@ def version_search(url, n_cols, text_cols):
     versions = {
         "MySQL",
         "MariaDB",
+        "Oracle",
         "PostgreSQL",
-        "MS Access"          
+        "MSSQL",
+        "SQLite"
     }
 
     for version in versions:        
