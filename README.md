@@ -1,4 +1,4 @@
-# SQL dumper
+# SQL Dumper
 
 ![logo](img/hackaday-security.png)
 
