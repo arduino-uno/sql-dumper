@@ -7,4 +7,4 @@ Lab-Link: https://github.com/frank-leitner/portswigger-websecurity-academy/tree/
 Difficulty: PRACTITIONER  
 Python script: [sqldumper.py](sqldumper.py)
 
-![Attacking successful](img/Screenshot.png)
+![Attacking successful](img/screenshot.png)
