@@ -23,4 +23,4 @@ Python script: [sqldumper.py](sqldumper.py)</br>
     sudo python3 sqldumper.py http://testphp.vulnweb.com/artists.php?artist=-1
 ```
 
-![Attacking successful](img/screenshot2.png)
+![Attacking successful](img/screenshot.png)
