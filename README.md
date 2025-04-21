@@ -15,7 +15,7 @@ Python script: [sqldumper.py](sqldumper.py)</br>
     sudo python3 checkproxy.py
 ```
 
-![Attacking successful](img/screenshot1.png)
+![Checking proxies](img/screenshot1.png)
 
 ### Example #2: SQL injection test
 
