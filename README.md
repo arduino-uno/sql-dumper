@@ -17,7 +17,7 @@ Python script: [sqldumper.py](sqldumper.py)</br>
 
 ![Attacking successful](img/screenshot1.png)
 
-### Example #1: SQL injection test
+### Example #2: SQL injection test
 
 ```bash
     sudo python3 sqldumper.py http://testphp.vulnweb.com/artists.php?artist=-1
