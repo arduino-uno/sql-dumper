@@ -57,8 +57,10 @@ def version_search(url, n_cols, text_cols):
     versions = {
         "MySQL",
         "MariaDB",
+        "Oracle",
         "PostgreSQL",
-        "MS Access"          
+        "MSSQL",
+        "SQLite"
     }
 
     for version in versions:        
@@ -145,4 +147,3 @@ if __name__ == "__main__":
     version_search(url, columns, text_cols)
     users = find_users_table(url, columns, text_cols)
     col_names = find_usrnm_passwd_cols(url, columns, text_cols, users)
-    admin_pass = admin_pass_find(url, columns, users, col_names)
