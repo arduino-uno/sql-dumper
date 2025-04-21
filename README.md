@@ -7,4 +7,20 @@ Lab-Link: https://github.com/frank-leitner/portswigger-websecurity-academy</br>
 Difficulty: PRACTITIONER</br>  
 Python script: [sqldumper.py](sqldumper.py)</br>
 
-![Attacking successful](img/screenshot.png)
+## Examples
+
+### Example #1: Checking the proxies (both http & https)
+
+```bash
+    sudo python3 checkproxy.py
+```
+
+![Attacking successful](img/screenshot1.png)
+
+### Example #1: SQL injection test
+
+```bash
+    sudo python3 sqldumper.py http://testphp.vulnweb.com/artists.php?artist=-1
+```
+
+![Attacking successful](img/screenshot2.png)
